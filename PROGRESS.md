@@ -2,11 +2,11 @@
 
 | Field | Current value |
 |---|---|
-| Overall | 0% |
+| Overall | 2% |
 | Current phase | Phase 0 — Contract Foundation |
-| Current task | TS-001 — Scaffold package and repository structure |
-| Repository state | Not yet established |
-| Last verified commit | None |
+| Current task | TS-002 — Define request/result TypeScript types |
+| Repository state | npm/TypeScript scaffold established; runtime implementation not started |
+| Last verified commit | Pending local commit for TS-001 |
 | Blockers | None known |
 | Release readiness | Not ready |
 
@@ -17,7 +17,7 @@
 | Goal / product boundary | DEFINED |
 | Normative specification | DRAFT |
 | Technical design | DRAFT |
-| Package scaffold | TODO |
+| Package scaffold | PASS |
 | Schema validation | TODO |
 | Safe discovery | TODO |
 | Vitest discovery | TODO |
@@ -77,24 +77,22 @@ no hidden confidence
 
 Documentation package has defined the initial product contract and execution plan.
 
-No runtime implementation evidence exists yet.
+TS-001 scaffold evidence now exists: package metadata, TypeScript configuration, CLI/library entrypoint declarations, package hygiene files, and design-specified directories. JSON parsing, scaffold-path assertions, whitespace validation, deterministic enumeration, and `npm pack --dry-run --json` passed.
 
-Therefore no implementation capability is marked PASS.
+No runtime implementation evidence exists yet. TypeScript and Vitest checks were not run because dependencies are not installed and package installation is prohibited.
 
 ## Next Best Move
 
-Implement **TS-001 — package/repository scaffold**, then immediately establish:
-
-1. schema/type skeleton;
-2. shared CLI/library core;
-3. verification scripts;
-4. first contract test.
+Implement **TS-002 — request/result TypeScript types**, then establish the schema/type skeleton before framework and mapping logic.
 
 Avoid implementing framework logic before the request/result envelope and safety boundaries exist.
 
 ## Known Risks
 
-1. Test selection can easily become heuristic-heavy.
+1. TypeScript and Vitest are not installed locally, so runtime verification is currently unavailable without the prohibited package-install step.
+   - Mitigation: keep the scaffold declarative and record the bounded validation gap explicitly.
+
+2. Test selection can easily become heuristic-heavy.
    - Mitigation: evidence classes + strict confidence ceiling.
 
 2. Monorepo ambiguity may cause unsafe broad claims.
@@ -121,6 +119,8 @@ npm run docs:check
 ```
 
 All applicable checks must pass from the actual repository/package artifact.
+
+For TS-001, the applicable scaffold checks passed; typecheck and test execution remain pending until dependencies are available through an authorized setup.
 
 ## Progress Update Rule
 

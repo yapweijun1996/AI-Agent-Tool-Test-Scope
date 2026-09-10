@@ -3,8 +3,8 @@
 | Field | Value |
 |---|---|
 | Milestone | V0.1 |
-| Status | Not started |
-| Current task | TS-001 |
+| Status | ACTIVE |
+| Current task | TS-002 |
 | Execution rule | One coherent verified slice at a time |
 
 Status values:
@@ -18,7 +18,7 @@ PASS
 
 ## P0 — Contract and Safety
 
-- [ ] **TS-001** Scaffold package and repository structure
+- [x] **TS-001** Scaffold package and repository structure
 - [ ] **TS-002** Define request/result TypeScript types
 - [ ] **TS-003** Add JSON schemas and runtime validation
 - [ ] **TS-004** Implement canonical root handling
@@ -114,5 +114,17 @@ Evidence:
 Known limitations:
 Commit:
 ```
+
+## TS-001 Completion
+
+ID: TS-001
+Status: PASS
+Goal: Establish the npm/TypeScript package scaffold and the bounded repository layout for the shared CLI/library architecture.
+Files changed: `package.json`, `tsconfig.json`, `.gitignore`, `.npmignore`, `src/`, `schemas/`, `fixtures/`, `test/`, `scripts/`, `skills/`.
+Acceptance criteria: Package metadata, Node.js engine requirement, CLI/library entrypoint declarations, TypeScript build configuration, package hygiene, and design-specified directories are present.
+Validation: JSON parse, scaffold path assertions, `git diff --check`, repeated sorted enumeration, and `npm pack --dry-run --json` passed. Typecheck and tests were not run because TypeScript and Vitest are not installed; package installation is prohibited.
+Evidence: `npm pack --dry-run --json` produced `agent-test-scope@0.1.0` with the explicitly packaged `schemas/` and `skills/` directories.
+Known limitations: Runtime APIs, schemas, tests, and verification scripts are intentionally not implemented by TS-001.
+Commit: recorded after verification.
 
 A task cannot be marked `PASS` from source inspection alone when runtime verification is applicable.
