@@ -6,7 +6,7 @@
 | Current phase | Phase 0 — Contract Foundation |
 | Current task | TS-002 — Define request/result TypeScript types |
 | Repository state | npm/TypeScript scaffold established; runtime implementation not started |
-| Last verified commit | Pending local commit for TS-001 |
+| Last verified commit | `d1348982aea9b4780f9eb419103346e8438c2a7b` — TS-001 scaffold |
 | Blockers | None known |
 | Release readiness | Not ready |
 

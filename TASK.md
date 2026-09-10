@@ -125,6 +125,6 @@ Acceptance criteria: Package metadata, Node.js engine requirement, CLI/library e
 Validation: JSON parse, scaffold path assertions, `git diff --check`, repeated sorted enumeration, and `npm pack --dry-run --json` passed. Typecheck and tests were not run because TypeScript and Vitest are not installed; package installation is prohibited.
 Evidence: `npm pack --dry-run --json` produced `agent-test-scope@0.1.0` with the explicitly packaged `schemas/` and `skills/` directories.
 Known limitations: Runtime APIs, schemas, tests, and verification scripts are intentionally not implemented by TS-001.
-Commit: recorded after verification.
+Commit: `d1348982aea9b4780f9eb419103346e8438c2a7b`.
 
 A task cannot be marked `PASS` from source inspection alone when runtime verification is applicable.
