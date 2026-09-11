@@ -17,7 +17,10 @@
   "files": [
     "dist",
     "schemas",
-    "skills"
+    "skills",
+    "README.md",
+    "SPEC.md",
+    "DESIGN.md"
   ],
   "engines": {
     "node": ">=20"
@@ -25,7 +28,13 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "typecheck": "tsc --noEmit -p tsconfig.json",
-    "test": "vitest run",
+    "test": "npm run build && node --test test/*.test.mjs",
+    "coverage": "npm run build && node scripts/coverage-check.mjs",
+    "schema:check": "node scripts/schema-check.mjs",
+    "capability:check": "npm run build && node scripts/capability-check.mjs",
+    "smoke:pack": "npm run build && node scripts/smoke-pack.mjs",
+    "benchmark:check": "npm run build && node scripts/benchmark-check.mjs",
+    "docs:check": "node scripts/docs-check.mjs",
     "verify": "npm run typecheck && npm test"
   },
   "devDependencies": {

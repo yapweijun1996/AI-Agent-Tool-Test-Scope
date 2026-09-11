@@ -2,13 +2,13 @@
 
 | Field | Current value |
 |---|---|
-| Overall | 2% |
-| Current phase | Phase 0 — Contract Foundation |
-| Current task | TS-002 — Define request/result TypeScript types |
-| Repository state | npm/TypeScript scaffold established; runtime implementation not started |
-| Last verified commit | `d1348982aea9b4780f9eb419103346e8438c2a7b` — TS-001 scaffold |
-| Blockers | None known |
-| Release readiness | Not ready |
+| Overall | 85% |
+| Current phase | Phase 1 — V0.1 Verification and Release Evidence |
+| Current task | TS-060 — Release-readiness review |
+| Repository state | V0.1 contract, bounded discovery, framework detection, static mapping, risk, planner, CLI, library, schemas, skill, and local verification scripts implemented |
+| Last verified commit | Latest local commit — deterministic test scope planner and V0.1 verification gates |
+| Blockers | Dependency-backed `npm run verify` unavailable in the no-dependencies checkout |
+| Release readiness | Pending dependency-backed clean install/verify |
 
 ## Capability Matrix
 
@@ -18,22 +18,22 @@
 | Normative specification | DRAFT |
 | Technical design | DRAFT |
 | Package scaffold | PASS |
-| Schema validation | TODO |
-| Safe discovery | TODO |
-| Vitest discovery | TODO |
-| Jest discovery | TODO |
-| Node test discovery | TODO |
-| Direct test mapping | TODO |
-| Static import evidence | TODO |
-| Evidence ranking | TODO |
-| Risk engine | TODO |
-| Verification planner | TODO |
-| CLI | TODO |
-| Library API | TODO |
-| Agent skill | TODO |
-| Package smoke | TODO |
-| Coverage gate | TODO |
-| Benchmark | TODO |
+| Schema validation | PASS |
+| Safe discovery | PASS |
+| Vitest discovery | PASS |
+| Jest discovery | PASS |
+| Node test discovery | PASS |
+| Direct test mapping | PASS |
+| Static import evidence | PASS |
+| Evidence ranking | PASS |
+| Risk engine | PASS |
+| Verification planner | PASS |
+| CLI | PASS |
+| Library API | PASS |
+| Agent skill | PASS |
+| Package smoke | PASS — extracted tarball public-entrypoint smoke; clean install pending |
+| Coverage gate | PASS |
+| Benchmark | PASS |
 | Release | TODO |
 
 ## Current Product Truth
@@ -75,22 +75,22 @@ no hidden confidence
 
 ## Latest Evidence
 
-Documentation package has defined the initial product contract and execution plan.
+The V0.1 runtime slice is implemented in `src/core/` with one shared CLI/library engine. It returns versioned JSON for all four operations and keeps commands as `executed: false` data. Ambiguous equally strong mappings are retained with an explicit warning, external impact-unavailable evidence is surfaced as `partial`, and the benchmark fixture verifies bounded discovery plus repeated-output equality.
 
 TS-001 scaffold evidence now exists: package metadata, TypeScript configuration, CLI/library entrypoint declarations, package hygiene files, and design-specified directories. JSON parsing, scaffold-path assertions, whitespace validation, deterministic enumeration, and `npm pack --dry-run --json` passed.
 
-No runtime implementation evidence exists yet. TypeScript and Vitest checks were not run because dependencies are not installed and package installation is prohibited.
+Runtime evidence: strict TypeScript compilation passed using the existing local TypeScript toolchain from the sibling Symbol Search workspace; 17 native Node tests passed; coverage passed at lines 92.44%, branches 80.35%, and functions 95.96%; schema, capability, extracted-tarball CLI/library smoke, benchmark, and documentation checks passed. The repository's declared `npm run verify` was attempted but stops at typecheck because this checkout has no installed `@types/node`; package installation is prohibited by the product boundary. The equivalent direct typecheck passed with the existing sibling toolchain and its type roots.
 
 ## Next Best Move
 
-Implement **TS-002 — request/result TypeScript types**, then establish the schema/type skeleton before framework and mapping logic.
+Complete **TS-060 — release-readiness review** by recording the dependency-backed clean-install limitation; all safe local checks are now green.
 
 Avoid implementing framework logic before the request/result envelope and safety boundaries exist.
 
 ## Known Risks
 
-1. TypeScript and Vitest are not installed locally, so runtime verification is currently unavailable without the prohibited package-install step.
-   - Mitigation: keep the scaffold declarative and record the bounded validation gap explicitly.
+1. The local repository has no installed TypeScript/Vitest dependencies; direct TypeScript compilation used an existing sibling compiler and tests use Node's native runner.
+   - Mitigation: keep verification commands explicit and record the dependency-backed npm gate as pending.
 
 2. Test selection can easily become heuristic-heavy.
    - Mitigation: evidence classes + strict confidence ceiling.
@@ -120,7 +120,7 @@ npm run docs:check
 
 All applicable checks must pass from the actual repository/package artifact.
 
-For TS-001, the applicable scaffold checks passed; typecheck and test execution remain pending until dependencies are available through an authorized setup.
+For the implemented slice, direct typecheck, 17 runtime tests, schema check, capability check, extracted tarball CLI/library smoke, coverage thresholds, benchmark bound, docs check, deterministic repeated output, root/symlink/secret/resource fixtures, and CLI/library parity passed. A clean dependency-backed install and dependency-complete `npm run verify` remain unavailable because package installation is outside the allowed boundary; the attempted npm gate failed only at missing Node type declarations before test execution.
 
 ## Progress Update Rule
 

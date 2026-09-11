@@ -2,12 +2,14 @@
 
 | Field | Value |
 |---|---|
-| Status | Proposed |
+| Status | Active — V0.1 implementation baseline |
 | Schema version | `1` |
 | Initial compatibility | JS / TS / JSX / TSX |
 | Initial frameworks | Vitest / Jest / Node.js test runner |
 
 This document is the normative product contract. `MUST`, `MUST NOT`, `SHOULD`, and `MAY` are normative terms.
+
+The current implementation exposes all four V0.1 operations through one shared TypeScript engine and preserves the result envelope, confidence ceiling, read-only boundary, and bounded discovery rules described below.
 
 ## 1. Product Boundary
 

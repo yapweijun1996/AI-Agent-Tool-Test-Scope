@@ -2,7 +2,7 @@
 
 | Field | Value |
 |---|---|
-| Status | Proposed |
+| Status | Active — V0.1 implementation baseline |
 | Architecture style | Deterministic local analysis |
 | Runtime | Node.js / TypeScript |
 | API model | Shared core behind CLI + library |
@@ -82,6 +82,8 @@ test/
 scripts/
 skills/
 ```
+
+The implemented V0.1 slice currently uses `src/core/{bounded-reader,discovery,engine,frameworks,imports,mapping,paths,planner,risk,validation}.ts`. Framework-specific behavior is represented as bounded metadata detection in `frameworks.ts`; it does not invoke framework runtimes. Static relationships are parsed from local ESM imports and literal CommonJS `require()` calls in `imports.ts`.
 
 ## 4. Shared Core
 
@@ -383,6 +385,8 @@ lines >= 85%
 functions >= 80%
 branches >= 75%
 ```
+
+The repository provides schema, capability, documentation, coverage, benchmark, and packaged-artifact smoke scripts. The tarball smoke extracts the generated archive, imports its public library entrypoint, and invokes its packaged CLI; a dependency-backed clean install remains a release check that requires package installation in the repository environment.
 
 ## 21. Rejected Alternatives
 
