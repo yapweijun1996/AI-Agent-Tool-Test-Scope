@@ -2,6 +2,22 @@
   "name": "agent-test-scope",
   "version": "0.1.0",
   "description": "Deterministic, local-first verification planning for AI coding agents",
+  "keywords": [
+    "ai-agents",
+    "verification",
+    "test-planning",
+    "vitest",
+    "jest",
+    "typescript"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yapweijun1996/AI-Agent-Tool-Test-Scope.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yapweijun1996/AI-Agent-Tool-Test-Scope/issues"
+  },
+  "homepage": "https://github.com/yapweijun1996/AI-Agent-Tool-Test-Scope#readme",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -25,6 +41,10 @@
   "engines": {
     "node": ">=20"
   },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
+  },
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "typecheck": "tsc --noEmit -p tsconfig.json",
@@ -35,7 +55,10 @@
     "smoke:pack": "npm run build && node scripts/smoke-pack.mjs",
     "benchmark:check": "npm run build && node scripts/benchmark-check.mjs",
     "docs:check": "node scripts/docs-check.mjs",
-    "verify": "npm run typecheck && npm test"
+    "release:check": "node scripts/release-check.mjs",
+    "verify": "npm run typecheck && npm test",
+    "prepack": "npm run build",
+    "prepublishOnly": "npm run verify && npm run release:check"
   },
   "devDependencies": {
     "@types/node": "^22.0.0",

@@ -386,7 +386,7 @@ functions >= 80%
 branches >= 75%
 ```
 
-The repository provides schema, capability, documentation, coverage, benchmark, and packaged-artifact smoke scripts. The tarball smoke extracts the generated archive, imports its public library entrypoint, and invokes its packaged CLI; a dependency-backed clean install remains a release check that requires package installation in the repository environment.
+The repository provides schema, capability, documentation, coverage, benchmark, release-configuration, and packaged-artifact smoke scripts. `prepack` builds `dist/` before packaging, while `prepublishOnly` runs verification and release checks. CI and publishing use `npm ci` against a committed lockfile; the tarball smoke extracts the generated archive, imports its public library entrypoint, and invokes its packaged CLI. Clean-install execution remains a release check that runs in CI because package installation is prohibited in the analysis environment.
 
 ## 21. Rejected Alternatives
 

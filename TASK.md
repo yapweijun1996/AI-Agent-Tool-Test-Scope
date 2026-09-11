@@ -4,7 +4,7 @@
 |---|---|
 | Milestone | V0.1 |
 | Status | ACTIVE |
-| Current task | TS-060 |
+| Current task | TS-064–TS-066 |
 | Execution rule | One coherent verified slice at a time |
 
 Status values:
@@ -99,6 +99,15 @@ These may move after V0.1 if standalone quality is not yet proven.
 - [x] **TS-059** Add `skills/agent-test-scope/SKILL.md`
 - [x] **TS-060** Release-readiness review
 
+## P0 — Release Hardening
+
+- [x] **TS-061** Add npm metadata and automatic prepack/publish gates
+- [x] **TS-062** Add GitHub CI verification workflow
+- [x] **TS-063** Add tag-triggered npm Trusted Publishing workflow
+- [ ] **TS-064** Choose and add project license
+- [ ] **TS-065** Run clean-install verification in authorized CI/GitHub environment
+- [ ] **TS-066** Commit and verify npm lockfile
+
 ## Task Completion Template
 
 For each completed task record:
@@ -140,3 +149,15 @@ Validation: Direct strict TypeScript compilation, 17 native Node tests, coverage
 Evidence: Latest local commit contains the V0.1 implementation and verification gates; the working tree contains no product changes after the review.
 Known limitations: A clean dependency-backed `npm install`/`npm run verify` was not performed because package installation is outside the task boundary. P2 external adapters remain intentionally deferred.
 Commit: latest local commit.
+
+## TS-061–TS-063 Release Hardening
+
+ID: TS-061–TS-063
+Status: PASS — technical release configuration staged; external license, lockfile, and CI execution gates remain pending.
+Goal: Make packaging fail closed when build/release prerequisites are missing and provide reproducible GitHub CI and tag-based npm publishing workflows.
+Files changed: `package.json`, `README.md`, `DESIGN.md`, `.github/workflows/ci.yml`, `.github/workflows/publish.yml`, `scripts/release-check.mjs`.
+Acceptance criteria: npm metadata and lifecycle gates are declared; `dist/` is built before packaging; CI uses locked installs; publishing requires a matching version tag, protected environment, OIDC permission, and provenance-enabled npm publish.
+Validation: JSON and YAML parsing passed; package dry-run contained `dist` and `skills/agent-test-scope/SKILL.md`; existing 17-test suite, direct typecheck, tarball smoke, benchmark, and documentation checks passed. The release check correctly fails closed on the currently missing legal license and lockfile.
+Evidence: npm Trusted Publishing workflow is `push`-tag only and has `contents: read` plus `id-token: write`; no long-lived npm token is stored in the repository.
+Known limitations: `package-lock.json` and a legal license have not been added; CI and publish workflow execution require GitHub and package-install access.
+Commit: pending local commit after this release-hardening slice.

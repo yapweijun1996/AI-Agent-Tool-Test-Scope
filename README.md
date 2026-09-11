@@ -22,6 +22,12 @@ The CLI writes one JSON result to stdout and human-readable copies of diagnostic
 
 The library exposes `getCapabilities`, `discoverTests`, `planTestScope`, `explainRecommendation`, and `execute` from `agent-test-scope`.
 
+## Agent skill and release status
+
+The npm package includes `skills/agent-test-scope/SKILL.md`. An agent host must load that file explicitly; npm does not automatically register skills. The package has no runtime dependencies, but the repository requires the development toolchain to build and verify it.
+
+The repository includes locked Node 20/22 CI and a tag-triggered npm publishing workflow using npm Trusted Publishing. Before publishing, choose and add the project's legal license, commit `package-lock.json`, create the matching `v<package.version>` tag, configure the npm trusted publisher for `.github/workflows/publish.yml` and the `npm-publish` GitHub environment, and run the clean-install checks in CI.
+
 ## Result model
 
 Every recommendation retains its evidence type and confidence. Direct filename mapping and explicit static imports may be `confirmed`; static transitive reachability is `strong`; naming, proximity, and fallback conventions are at most `candidate`. Risk describes verification breadth, not failure probability.
