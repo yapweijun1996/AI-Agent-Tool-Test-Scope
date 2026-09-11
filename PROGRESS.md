@@ -4,11 +4,11 @@
 |---|---|
 | Overall | 85% |
 | Current phase | Phase 1 — V0.1 Verification and Release Evidence |
-| Current task | TS-060 — Release-readiness review |
+| Current task | V0.1 handoff — release review complete |
 | Repository state | V0.1 contract, bounded discovery, framework detection, static mapping, risk, planner, CLI, library, schemas, skill, and local verification scripts implemented |
 | Last verified commit | Latest local commit — deterministic test scope planner and V0.1 verification gates |
 | Blockers | Dependency-backed `npm run verify` unavailable in the no-dependencies checkout |
-| Release readiness | Pending dependency-backed clean install/verify |
+| Release readiness | Reviewed — NOT READY without dependency-backed clean install/verify |
 
 ## Capability Matrix
 
@@ -34,7 +34,7 @@
 | Package smoke | PASS — extracted tarball public-entrypoint smoke; clean install pending |
 | Coverage gate | PASS |
 | Benchmark | PASS |
-| Release | TODO |
+| Release | REVIEWED — NOT READY (dependency environment gate) |
 
 ## Current Product Truth
 
@@ -83,7 +83,7 @@ Runtime evidence: strict TypeScript compilation passed using the existing local 
 
 ## Next Best Move
 
-Complete **TS-060 — release-readiness review** by recording the dependency-backed clean-install limitation; all safe local checks are now green.
+V0.1 implementation and safe local verification are complete. The next external handoff action is to run the dependency-backed clean-install/verify gate in an authorized environment; no further product-code change is currently indicated.
 
 Avoid implementing framework logic before the request/result envelope and safety boundaries exist.
 
@@ -95,13 +95,13 @@ Avoid implementing framework logic before the request/result envelope and safety
 2. Test selection can easily become heuristic-heavy.
    - Mitigation: evidence classes + strict confidence ceiling.
 
-2. Monorepo ambiguity may cause unsafe broad claims.
+3. Monorepo ambiguity may cause unsafe broad claims.
    - Mitigation: single-package full support first; ambiguous workspace behavior becomes partial/error.
 
-3. Static imports cannot prove runtime behavior.
+4. Static imports cannot prove runtime behavior.
    - Mitigation: explicit partial/unknown semantics.
 
-4. Command generation could be confused with execution.
+5. Command generation could be confused with execution.
    - Mitigation: commands are structured data only.
 
 ## Completion Evidence Required

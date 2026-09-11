@@ -97,7 +97,7 @@ These may move after V0.1 if standalone quality is not yet proven.
 - [x] **TS-057** Benchmark check
 - [x] **TS-058** Documentation consistency check
 - [x] **TS-059** Add `skills/agent-test-scope/SKILL.md`
-- [ ] **TS-060** Release-readiness review
+- [x] **TS-060** Release-readiness review
 
 ## Task Completion Template
 
@@ -128,3 +128,15 @@ Known limitations: Runtime APIs, schemas, tests, and verification scripts are in
 Commit: `d1348982aea9b4780f9eb419103346e8438c2a7b`.
 
 A task cannot be marked `PASS` from source inspection alone when runtime verification is applicable.
+
+## TS-060 Release-readiness Review
+
+ID: TS-060
+Status: PASS — review complete; release remains NOT READY until the dependency-backed clean-install gate is run in an authorized environment.
+Goal: Review V0.1 implementation evidence against the release checklist without weakening the no-install boundary.
+Files changed: `TASK.md`, `PROGRESS.md`, `EPIC.md`, `ROADMAP.md`.
+Acceptance criteria: Product DoD checks are inventoried, the remaining environment limitation is explicit, and no unverified release claim is made.
+Validation: Direct strict TypeScript compilation, 17 native Node tests, coverage, schema, capability, extracted tarball CLI/library smoke, benchmark, documentation, determinism, security/bounds, and CLI/library parity checks passed. The declared `npm run verify` was attempted and stopped before tests because `@types/node` is not installed.
+Evidence: Latest local commit contains the V0.1 implementation and verification gates; the working tree contains no product changes after the review.
+Known limitations: A clean dependency-backed `npm install`/`npm run verify` was not performed because package installation is outside the task boundary. P2 external adapters remain intentionally deferred.
+Commit: latest local commit.

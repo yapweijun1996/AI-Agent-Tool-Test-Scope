@@ -2,7 +2,7 @@
 
 | Field | Value |
 |---|---|
-| Status | Proposed |
+| Status | Active — V0.1 implementation baseline |
 | Target | V0.1 vertical slice |
 | Sequencing | Evidence-driven |
 

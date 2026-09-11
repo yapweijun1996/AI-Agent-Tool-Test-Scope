@@ -2,7 +2,7 @@
 
 | Field | Value |
 |---|---|
-| Status | Proposed |
+| Status | Active — V0.1 implementation baseline |
 | Planning style | Evidence-driven, not date-driven |
 
 ## Baseline
