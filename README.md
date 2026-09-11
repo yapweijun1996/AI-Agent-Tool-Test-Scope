@@ -26,7 +26,7 @@ The library exposes `getCapabilities`, `discoverTests`, `planTestScope`, `explai
 
 The npm package includes `skills/agent-test-scope/SKILL.md`. An agent host must load that file explicitly; npm does not automatically register skills. The package has no runtime dependencies, but the repository requires the development toolchain to build and verify it.
 
-The repository includes locked Node 20/22 CI and a tag-triggered npm publishing workflow using npm Trusted Publishing. Before publishing, choose and add the project's legal license, commit `package-lock.json`, create the matching `v<package.version>` tag, configure the npm trusted publisher for `.github/workflows/publish.yml` and the `npm-publish` GitHub environment, and run the clean-install checks in CI.
+The project is licensed under MIT; see [LICENSE](./LICENSE). The repository includes locked Node 20/22 CI and a tag-triggered npm publishing workflow using npm Trusted Publishing. Before publishing, commit `package-lock.json`, create the matching `v<package.version>` tag, configure the npm trusted publisher for `.github/workflows/publish.yml` and the `npm-publish` GitHub environment, and run the clean-install checks in CI.
 
 ## Result model
 

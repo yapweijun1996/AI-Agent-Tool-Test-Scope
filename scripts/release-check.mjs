@@ -16,6 +16,7 @@ assert.equal(packageJson.scripts?.prepublishOnly, "npm run verify && npm run rel
 assert.equal(typeof packageJson.version, "string");
 assert.ok(packageJson.version.length > 0);
 assert.ok(typeof packageJson.license === "string" && packageJson.license.length > 0, "package.json license must be selected before release");
+assert.ok(existsSync(join(root, "..", "LICENSE")), "LICENSE file is required for release");
 assert.ok(existsSync(join(root, "..", "package-lock.json")), "package-lock.json is required for reproducible release verification");
 
 const ci = readFileSync(join(root, "..", ".github", "workflows", "ci.yml"), "utf8");
@@ -28,4 +29,4 @@ assert.match(publish, /tags:/);
 assert.match(publish, /v\*/);
 assert.ok(existsSync(join(root, "..", "README.md")));
 
-console.log("Release configuration baseline passed; legal license selection and clean-install execution remain external gates");
+console.log("Release configuration baseline passed; clean-install execution remains an external gate");

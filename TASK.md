@@ -104,7 +104,7 @@ These may move after V0.1 if standalone quality is not yet proven.
 - [x] **TS-061** Add npm metadata and automatic prepack/publish gates
 - [x] **TS-062** Add GitHub CI verification workflow
 - [x] **TS-063** Add tag-triggered npm Trusted Publishing workflow
-- [ ] **TS-064** Choose and add project license
+- [x] **TS-064** Choose and add project license
 - [ ] **TS-065** Run clean-install verification in authorized CI/GitHub environment
 - [ ] **TS-066** Commit and verify npm lockfile
 
@@ -153,11 +153,23 @@ Commit: latest local commit.
 ## TS-061–TS-063 Release Hardening
 
 ID: TS-061–TS-063
-Status: PASS — technical release configuration staged; external license, lockfile, and CI execution gates remain pending.
+Status: PASS — technical release configuration and MIT licensing staged; lockfile and CI execution gates remain pending.
 Goal: Make packaging fail closed when build/release prerequisites are missing and provide reproducible GitHub CI and tag-based npm publishing workflows.
 Files changed: `package.json`, `README.md`, `DESIGN.md`, `.github/workflows/ci.yml`, `.github/workflows/publish.yml`, `scripts/release-check.mjs`.
 Acceptance criteria: npm metadata and lifecycle gates are declared; `dist/` is built before packaging; CI uses locked installs; publishing requires a matching version tag, protected environment, OIDC permission, and provenance-enabled npm publish.
-Validation: JSON and YAML parsing passed; package dry-run contained `dist` and `skills/agent-test-scope/SKILL.md`; existing 17-test suite, direct typecheck, tarball smoke, benchmark, and documentation checks passed. The release check correctly fails closed on the currently missing legal license and lockfile.
+Validation: JSON and YAML parsing passed; package dry-run contained `dist`, `skills/agent-test-scope/SKILL.md`, and `LICENSE`; existing 17-test suite, direct typecheck, tarball smoke, benchmark, and documentation checks passed. The release check passes the MIT license/file checks and correctly fails closed on the currently missing lockfile.
 Evidence: npm Trusted Publishing workflow is `push`-tag only and has `contents: read` plus `id-token: write`; no long-lived npm token is stored in the repository.
-Known limitations: `package-lock.json` and a legal license have not been added; CI and publish workflow execution require GitHub and package-install access.
+Known limitations: `package-lock.json` has not been added; CI and publish workflow execution require GitHub and package-install access.
+Commit: pending local commit after this release-hardening slice.
+
+## TS-064 Project License
+
+ID: TS-064
+Status: PASS — MIT license selected and packaged.
+Goal: Add an explicit open-source license to the npm metadata and published artifact.
+Files changed: `package.json`, `LICENSE`, `README.md`, `TASK.md`, `PROGRESS.md`, `scripts/release-check.mjs`.
+Acceptance criteria: `package.json` declares `MIT`, the standard MIT notice is present in `LICENSE`, the file is included in the npm package, and the release check validates both metadata and file presence.
+Validation: JSON parsing, `git diff --check`, and static release-configuration inspection passed; the release check now passes the license gates and stops at the still-missing `package-lock.json` gate.
+Evidence: `package.json` declares `license: MIT`, `LICENSE` is included in `files`, and README links to the license.
+Known limitations: Copyright holder is currently recorded as `yapweijun1996`; replace it if the legal copyright owner should be a different person or organization. The lockfile and dependency-backed CI execution remain pending.
 Commit: pending local commit after this release-hardening slice.

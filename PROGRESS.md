@@ -4,11 +4,11 @@
 |---|---|
 | Overall | 92% |
 | Current phase | Phase 1 — Release Hardening |
-| Current task | TS-064–TS-066 — license, lockfile, and clean-install gates |
-| Repository state | V0.1 implementation plus npm metadata, prepack/publish gates, locked CI, release configuration check, and tag-triggered Trusted Publishing workflow |
+| Current task | TS-065–TS-066 — lockfile and clean-install gates |
+| Repository state | V0.1 implementation plus MIT licensing, npm metadata, prepack/publish gates, locked CI, release configuration check, and tag-triggered Trusted Publishing workflow |
 | Last verified commit | Latest local commit — deterministic test scope planner and V0.1 verification gates |
-| Blockers | Project license decision, committed npm lockfile, and dependency-backed clean-install verification require external authorization/environment |
-| Release readiness | NOT READY — technical workflow staged; license, lockfile, and clean-install gates pending |
+| Blockers | Committed npm lockfile and dependency-backed clean-install verification require external authorization/environment |
+| Release readiness | NOT READY — technical workflow and MIT licensing staged; lockfile and clean-install gates pending |
 
 ## Capability Matrix
 
@@ -34,7 +34,7 @@
 | Package smoke | PASS — extracted tarball public-entrypoint smoke; clean install pending |
 | Coverage gate | PASS |
 | Benchmark | PASS |
-| Release | NOT READY — license, lockfile, and clean-install gates pending |
+| Release | NOT READY — lockfile and clean-install gates pending |
 
 ## Current Product Truth
 
@@ -79,11 +79,11 @@ The V0.1 runtime slice is implemented in `src/core/` with one shared CLI/library
 
 TS-001 scaffold evidence now exists: package metadata, TypeScript configuration, CLI/library entrypoint declarations, package hygiene files, and design-specified directories. JSON parsing, scaffold-path assertions, whitespace validation, deterministic enumeration, and `npm pack --dry-run --json` passed.
 
-Runtime evidence before release hardening: strict TypeScript compilation passed using the existing local TypeScript toolchain from the sibling Symbol Search workspace; 17 native Node tests passed; coverage passed at lines 92.44%, branches 80.35%, and functions 95.96%; schema, capability, extracted-tarball CLI/library smoke, benchmark, and documentation checks passed. The repository's declared `npm run verify` was attempted but stops at typecheck because this checkout has no installed `@types/node`; package installation is prohibited by the product boundary. Release hardening now adds `prepack`, `prepublishOnly`, npm metadata, locked CI, a fail-closed release check, and tag-triggered Trusted Publishing configuration. YAML and release-config checks pass structurally; the release check intentionally fails closed on the missing license (and will next require the missing lockfile), while clean-install execution remains pending.
+Runtime evidence before release hardening: strict TypeScript compilation passed using the existing local TypeScript toolchain from the sibling Symbol Search workspace; 17 native Node tests passed; coverage passed at lines 92.44%, branches 80.35%, and functions 95.96%; schema, capability, extracted-tarball CLI/library smoke, benchmark, and documentation checks passed. The repository's declared `npm run verify` was attempted but stops at typecheck because this checkout has no installed `@types/node`; package installation is prohibited by the product boundary. Release hardening now adds `prepack`, `prepublishOnly`, npm metadata, locked CI, a fail-closed release check, and tag-triggered Trusted Publishing configuration. MIT license/file checks pass structurally; the release check now fails closed only on the missing lockfile, while clean-install execution remains pending.
 
 ## Next Best Move
 
-V0.1 implementation is complete and release hardening is staged. The next external handoff actions are to choose the legal license, create `package-lock.json`, and run the dependency-backed clean-install/verify gate in an authorized GitHub environment; no further product-code change is currently indicated.
+V0.1 implementation is complete and release hardening is staged. The next external handoff actions are to create `package-lock.json` and run the dependency-backed clean-install/verify gate in an authorized GitHub environment; no further product-code change is currently indicated.
 
 Avoid implementing framework logic before the request/result envelope and safety boundaries exist.
 
@@ -120,7 +120,7 @@ npm run docs:check
 
 All applicable checks must pass from the actual repository/package artifact.
 
-For the implemented slice, direct typecheck, 17 runtime tests, schema check, capability check, extracted tarball CLI/library smoke, coverage thresholds, benchmark bound, docs check, deterministic repeated output, root/symlink/secret/resource fixtures, and CLI/library parity passed. Release configuration checks are staged, but a clean dependency-backed install and dependency-complete `npm run verify` remain unavailable because package installation is outside the allowed boundary; the attempted npm gate failed only at missing Node type declarations before test execution.
+For the implemented slice, direct typecheck, 17 runtime tests, schema check, capability check, extracted tarball CLI/library smoke, coverage thresholds, benchmark bound, docs check, deterministic repeated output, root/symlink/secret/resource fixtures, and CLI/library parity passed. MIT licensing and release configuration checks are staged, but a clean dependency-backed install and dependency-complete `npm run verify` remain unavailable because package installation is outside the allowed boundary; the attempted npm gate failed only at missing Node type declarations before test execution.
 
 ## Progress Update Rule
 
