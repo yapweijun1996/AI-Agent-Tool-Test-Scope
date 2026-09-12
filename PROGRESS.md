@@ -4,11 +4,11 @@
 |---|---|
 | Overall | 92% |
 | Current phase | Phase 1 — Release Hardening |
-| Current task | TS-065–TS-066 — lockfile and clean-install gates |
-| Repository state | V0.1 implementation plus MIT licensing, npm metadata, prepack/publish gates, locked CI, release configuration check, and tag-triggered Trusted Publishing workflow |
+| Current task | Release handoff — GitHub CI and npm Trusted Publishing execution |
+| Repository state | V0.1 implementation plus MIT licensing, committed npm lockfile, dependency-backed clean install, npm metadata, prepack/publish gates, locked CI, release configuration check, and tag-triggered Trusted Publishing workflow |
 | Last verified commit | `8b8c409` — npm CLI bin metadata normalized after publish dry-run audit |
-| Blockers | Committed npm lockfile and dependency-backed clean-install verification require external authorization/environment |
-| Release readiness | NOT READY — technical workflow and MIT licensing staged; lockfile and clean-install gates pending |
+| Blockers | GitHub CI execution, npm Trusted Publisher/environment configuration, and real tagged publish require external GitHub/npm authorization; copyright-holder confirmation remains a legal gate |
+| Release readiness | NEAR READY — local clean-install, release, and security gates pass; GitHub/registry execution remains pending |
 
 ## Capability Matrix
 
@@ -31,10 +31,10 @@
 | CLI | PASS |
 | Library API | PASS |
 | Agent skill | PASS |
-| Package smoke | PASS — extracted tarball public-entrypoint smoke; clean install pending |
+| Package smoke | PASS — extracted tarball public-entrypoint smoke and clean install passed |
 | Coverage gate | PASS |
 | Benchmark | PASS |
-| Release | NOT READY — lockfile and clean-install gates pending |
+| Release | NEAR READY — local gates pass; GitHub/registry execution pending |
 
 ## Current Product Truth
 
@@ -79,11 +79,11 @@ The V0.1 runtime slice is implemented in `src/core/` with one shared CLI/library
 
 TS-001 scaffold evidence now exists: package metadata, TypeScript configuration, CLI/library entrypoint declarations, package hygiene files, and design-specified directories. JSON parsing, scaffold-path assertions, whitespace validation, deterministic enumeration, and `npm pack --dry-run --json` passed.
 
-Runtime evidence before release hardening: strict TypeScript compilation passed using the existing local TypeScript toolchain from the sibling Symbol Search workspace; 17 native Node tests passed; coverage passed at lines 92.44%, branches 80.35%, and functions 95.96%; schema, capability, extracted-tarball CLI/library smoke, benchmark, and documentation checks passed. The repository's declared `npm run verify` was attempted but stops at typecheck because this checkout has no installed `@types/node`; package installation is prohibited by the product boundary. Release hardening now adds `prepack`, `prepublishOnly`, npm metadata, locked CI, a fail-closed release check, and tag-triggered Trusted Publishing configuration. MIT license/file checks pass structurally; the release check now fails closed only on the missing lockfile, while clean-install execution remains pending. The npm publish dry-run now passes without metadata auto-correction after normalizing the CLI `bin` target; `npm audit` remains blocked by the missing lockfile.
+Runtime evidence before release hardening: strict TypeScript compilation passed using the existing local TypeScript toolchain from the sibling Symbol Search workspace; 17 native Node tests passed; coverage passed at lines 92.44%, branches 80.35%, and functions 95.96%; schema, capability, extracted-tarball CLI/library smoke, benchmark, and documentation checks passed. After generating the committed lockfile and removing an unused vulnerable Vitest development dependency, `npm ci`, the declared `npm run verify`, all repository gates, `npm audit`, and `npm audit --omit=dev` pass. Release hardening now includes `prepack`, `prepublishOnly`, npm metadata, locked CI, a fail-closed release check, and tag-triggered Trusted Publishing configuration. The npm publish dry-run passes without metadata auto-correction, and the packaged artifact contains the public library, CLI, schemas, skill, and MIT license. GitHub CI execution, npm Trusted Publisher/environment configuration, and a real tagged publish remain pending.
 
 ## Next Best Move
 
-V0.1 implementation is complete and release hardening is staged. The next external handoff actions are to create `package-lock.json` and run the dependency-backed clean-install/verify gate in an authorized GitHub environment; no further product-code change is currently indicated.
+V0.1 implementation and local release gates are complete. The next external handoff actions are to push the verified commits, run GitHub CI, configure the npm Trusted Publisher and `npm-publish` environment, and publish only from a matching version tag; no further product-code change is currently indicated.
 
 Avoid implementing framework logic before the request/result envelope and safety boundaries exist.
 
@@ -117,11 +117,12 @@ npm run capability:check
 npm run benchmark:check
 npm run docs:check
 npm run release:check
+npm audit
 ```
 
 All applicable checks must pass from the actual repository/package artifact.
 
-For the implemented slice, direct typecheck, 17 runtime tests, schema check, capability check, extracted tarball CLI/library smoke, coverage thresholds, benchmark bound, docs check, deterministic repeated output, root/symlink/secret/resource fixtures, and CLI/library parity passed. MIT licensing and release configuration checks are staged, but a clean dependency-backed install and dependency-complete `npm run verify` remain unavailable because package installation is outside the allowed boundary; the attempted npm gate failed only at missing Node type declarations before test execution.
+For the implemented slice, direct typecheck, 17 runtime tests, schema check, capability check, extracted tarball CLI/library smoke, coverage thresholds, benchmark bound, docs check, deterministic repeated output, root/symlink/secret/resource fixtures, CLI/library parity, committed-lockfile `npm ci`, dependency-complete `npm run verify`, `npm audit`, and release configuration checks passed. GitHub CI and a real npm Trusted Publishing release remain unexecuted external gates.
 
 ## Progress Update Rule
 

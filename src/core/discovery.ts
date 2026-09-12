@@ -1,4 +1,5 @@
 import { lstatSync, readdirSync, statSync } from "node:fs";
+import type { Dirent } from "node:fs";
 import { basename, join } from "node:path";
 import type { Diagnostic, ResourceLimits, Truncation } from "../types.js";
 import { readBoundedText } from "./bounded-reader.js";
@@ -192,9 +193,9 @@ export function discoverFiles(root: RootInfo, options: DiscoveryOptions): Discov
       return;
     }
     const scopes = [...inherited, loadGitignore(root, directory, options.limits, diagnostics)];
-    let entries: ReturnType<typeof readdirSync>;
+    let entries: Dirent<string>[];
     try {
-      entries = readdirSync(directory, { withFileTypes: true }).sort((left, right) => left.name < right.name ? -1 : left.name > right.name ? 1 : 0);
+      entries = readdirSync(directory, { encoding: "utf8", withFileTypes: true }).sort((left, right) => left.name < right.name ? -1 : left.name > right.name ? 1 : 0);
     } catch (error) {
       diagnostics.push(diagnostic("INTERNAL_ERROR", `Unable to read directory: ${error instanceof Error ? error.message : String(error)}`, "warning", repositoryRelative(root.absolute, directory)));
       return;

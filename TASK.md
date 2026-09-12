@@ -105,8 +105,8 @@ These may move after V0.1 if standalone quality is not yet proven.
 - [x] **TS-062** Add GitHub CI verification workflow
 - [x] **TS-063** Add tag-triggered npm Trusted Publishing workflow
 - [x] **TS-064** Choose and add project license
-- [ ] **TS-065** Run clean-install verification in authorized CI/GitHub environment
-- [ ] **TS-066** Commit and verify npm lockfile
+- [x] **TS-065** Run clean-install verification in authorized CI/GitHub environment
+- [x] **TS-066** Commit and verify npm lockfile
 
 ## Task Completion Template
 
@@ -159,7 +159,7 @@ Files changed: `package.json`, `README.md`, `DESIGN.md`, `.github/workflows/ci.y
 Acceptance criteria: npm metadata and lifecycle gates are declared; `dist/` is built before packaging; CI uses locked installs; publishing requires a matching version tag, protected environment, OIDC permission, and provenance-enabled npm publish.
 Validation: JSON and YAML parsing passed; package dry-run contained `dist`, `skills/agent-test-scope/SKILL.md`, and `LICENSE`; existing 17-test suite, direct typecheck, tarball smoke, benchmark, and documentation checks passed. The release check passes the MIT license/file checks and correctly fails closed on the currently missing lockfile.
 Evidence: npm Trusted Publishing workflow is `push`-tag only and has `contents: read` plus `id-token: write`; no long-lived npm token is stored in the repository.
-Known limitations: `package-lock.json` has not been added; CI and publish workflow execution require GitHub and package-install access.
+Known limitations: GitHub CI and publish workflow execution require GitHub and npm authorization; the local clean-install gate is now complete.
 Commit: `7b63c10`.
 
 ## TS-064 Project License
@@ -173,3 +173,15 @@ Validation: JSON parsing, `git diff --check`, and static release-configuration i
 Evidence: `package.json` declares `license: MIT`, `LICENSE` is included in `files`, and README links to the license.
 Known limitations: Copyright holder is currently recorded as `yapweijun1996`; replace it if the legal copyright owner should be a different person or organization. The lockfile and dependency-backed CI execution remain pending.
 Commit: `1c287c8` (follow-up npm metadata normalization: `8b8c409`).
+
+## TS-065–TS-066 Clean Install and Lockfile
+
+ID: TS-065–TS-066
+Status: PASS — reproducible dependency installation and local release gates verified.
+Goal: Commit a reproducible npm lockfile and prove the package from a clean dependency installation.
+Files changed: `package-lock.json`, `package.json`, `src/core/discovery.ts`, `scripts/smoke-pack.mjs`, `TASK.md`, `PROGRESS.md`.
+Acceptance criteria: `npm ci` succeeds from the committed lockfile; `npm run verify`, coverage, schema, capability, packaged-artifact smoke, benchmark, docs, release, and audit gates pass; no runtime dependency vulnerabilities remain.
+Validation: `npm ci --ignore-scripts`, `npm run verify`, `npm run coverage`, `npm run schema:check`, `npm run capability:check`, `npm run smoke:pack`, `npm run benchmark:check`, `npm run docs:check`, `npm run release:check`, `npm audit`, and `npm audit --omit=dev` all passed.
+Evidence: The lockfile resolves only `@types/node`, `typescript`, and `undici-types` for development; runtime dependency tree is empty and both audit modes report zero vulnerabilities. The type fix makes directory discovery compatible with the locked Node declarations without changing runtime behavior.
+Known limitations: GitHub CI, npm Trusted Publisher/environment configuration, and a real tagged registry publish remain external gates.
+Commit: pending local commit after this verification slice.

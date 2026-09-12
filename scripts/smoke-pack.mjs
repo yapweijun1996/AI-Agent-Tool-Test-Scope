@@ -8,7 +8,7 @@ const root = resolve(new URL("..", import.meta.url).pathname);
 const packageJson = JSON.parse(readFileSync(resolve(root, "package.json"), "utf8"));
 for (const file of ["dist/index.js", "dist/index.d.ts", "dist/cli.js", "schemas/request.schema.json", "schemas/result.schema.json", "schemas/capabilities.schema.json"]) assert.ok(existsSync(resolve(root, file)), `packaged file is missing: ${file}`);
 assert.equal(packageJson.main, "./dist/index.js");
-assert.equal(packageJson.bin["agent-test-scope"], "./dist/cli.js");
+assert.equal(packageJson.bin["agent-test-scope"], "dist/cli.js");
 const output = mkdtempSync(join(tmpdir(), "agent-test-scope-pack-"));
 try {
   const packed = JSON.parse(execFileSync("npm", ["pack", "--ignore-scripts", "--pack-destination", output, "--json"], { cwd: root, encoding: "utf8" }))[0];
