@@ -6,7 +6,7 @@
 | Current phase | Phase 1 — Release Hardening |
 | Current task | TS-068–TS-069 — dual package compatibility and controlled published-package pilot |
 | Repository state | V0.1 implementation plus MIT licensing, committed npm lockfile, dependency-backed clean install, npm metadata, dual ESM/CommonJS outputs, prepack/publish gates, green Node 20/22 CI baseline, release configuration check, tag-triggered Trusted Publishing workflow, and a verified published-package pilot |
-| Last verified commit | `445da3c` — dual ESM/CommonJS package entrypoints and controlled published-package pilot |
+| Last verified commit | `0629f9b` — dual ESM/CommonJS package entrypoints and controlled published-package pilot |
 | Blockers | The `0.1.1` candidate still needs a push, candidate CI run, and explicit registry publication. npm Trusted Publisher/environment configuration and copyright-holder confirmation remain external/legal gates |
 | Release readiness | `0.1.0` is published and pilot-verified; `0.1.1` is locally release-ready but not yet CI- or registry-verified |
 
@@ -83,7 +83,7 @@ Runtime evidence: the dependency-backed `npm ci`, declared `npm run verify`, 17 
 
 ## Next Best Move
 
-The next handoff is to push commit `445da3c`, confirm its Node 20/22 GitHub run, then configure/verify npm Trusted Publishing and publish only from the matching `v0.1.1` tag. The controlled pilot is sufficient for the package boundary; it is not evidence of model quality or a specific agent host's sandbox behavior.
+The next handoff is to push commit `0629f9b`, confirm its Node 20/22 GitHub run, then configure/verify npm Trusted Publishing and publish only from the matching `v0.1.1` tag. The controlled pilot is sufficient for the package boundary; it is not evidence of model quality or a specific agent host's sandbox behavior.
 
 Avoid implementing framework logic before the request/result envelope and safety boundaries exist.
 

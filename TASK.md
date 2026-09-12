@@ -210,7 +210,7 @@ Acceptance criteria: ESM `import` and CommonJS `require` resolve the public API;
 Validation: `npm run verify`, coverage, schema, capability, packaged tarball smoke, benchmark, documentation, release, audit, and production publish dry-run checks passed. The tarball smoke loaded ESM directly and resolved the package through `require('agent-test-scope')` from an extracted package.
 Evidence: `package.json` maps `import` to `dist/index.js`, `require` and `main` to `dist/cjs/index.js`, and the package includes the nested CommonJS package marker required by the root ESM package boundary.
 Known limitations: Version `0.1.1` is not yet published; GitHub CI for this candidate and registry publication remain pending external release actions.
-Commit: `445da3c`.
+Commit: `0629f9b`.
 
 ## TS-069 Controlled Published-Package Pilot
 
@@ -222,4 +222,4 @@ Acceptance criteria: The published artifact loads its Skill, executes `capabilit
 Validation: `npm pack agent-test-scope@0.1.0` was extracted into a temporary directory and `node scripts/pilot-published.mjs` passed. The fixture snapshot before and after the pilot was identical.
 Evidence: The pilot reported package version `0.1.0`, `skillLoaded: true`, `targetRepositoryMutated: false`, and successful results for all three operations.
 Known limitations: This is a controlled host-like pilot, not an integration with a specific LLM or agent runtime because none was supplied. It validates the package/Skill/tool boundary, not model quality or an external host's sandbox policy.
-Commit: `445da3c`.
+Commit: `0629f9b`.
