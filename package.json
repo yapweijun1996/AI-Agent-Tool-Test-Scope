@@ -1,6 +1,6 @@
 {
   "name": "agent-test-scope",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Deterministic, local-first verification planning for AI coding agents",
   "keywords": [
     "ai-agents",
@@ -20,7 +20,8 @@
   "homepage": "https://github.com/yapweijun1996/AI-Agent-Tool-Test-Scope#readme",
   "license": "MIT",
   "type": "module",
-  "main": "./dist/index.js",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "bin": {
     "agent-test-scope": "dist/cli.js"
@@ -28,7 +29,8 @@
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
+      "import": "./dist/index.js",
+      "require": "./dist/cjs/index.js"
     }
   },
   "files": [
@@ -48,8 +50,12 @@
     "registry": "https://registry.npmjs.org"
   },
   "scripts": {
-    "build": "tsc -p tsconfig.json",
-    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "build:esm": "tsc -p tsconfig.json",
+    "build:cjs": "tsc -p tsconfig.cjs.json && node scripts/build-cjs.mjs",
+    "build": "npm run build:esm && npm run build:cjs",
+    "typecheck:esm": "tsc --noEmit -p tsconfig.json",
+    "typecheck:cjs": "tsc --noEmit -p tsconfig.cjs.json",
+    "typecheck": "npm run typecheck:esm && npm run typecheck:cjs",
     "test": "npm run build && node --test test/*.test.mjs",
     "coverage": "npm run build && node scripts/coverage-check.mjs",
     "schema:check": "node scripts/schema-check.mjs",

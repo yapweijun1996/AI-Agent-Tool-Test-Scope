@@ -386,7 +386,7 @@ functions >= 80%
 branches >= 75%
 ```
 
-The repository provides schema, capability, documentation, coverage, benchmark, release-configuration, and packaged-artifact smoke scripts. `prepack` builds `dist/` before packaging, while `prepublishOnly` runs verification and release checks. CI and publishing use `npm ci` against a committed lockfile; the tarball smoke extracts the generated archive, imports its public library entrypoint, and invokes its packaged CLI. Clean-install execution remains a release check that runs in CI because package installation is prohibited in the analysis environment.
+The repository provides schema, capability, documentation, coverage, benchmark, release-configuration, and packaged-artifact smoke scripts. `prepack` builds both the ESM and CommonJS library outputs under `dist/` before packaging, while `prepublishOnly` runs verification and release checks. CI and publishing use `npm ci` against a committed lockfile; the tarball smoke extracts the generated archive, validates both public library entrypoints, and invokes its packaged CLI. Clean-install execution is enforced locally and in CI as a release check.
 
 ## 21. Rejected Alternatives
 

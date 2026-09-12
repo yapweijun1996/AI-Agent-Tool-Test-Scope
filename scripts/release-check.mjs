@@ -13,11 +13,18 @@ assert.equal(packageJson.publishConfig?.access, "public");
 assert.equal(packageJson.publishConfig?.registry, "https://registry.npmjs.org");
 assert.equal(packageJson.scripts?.prepack, "npm run build");
 assert.equal(packageJson.scripts?.prepublishOnly, "npm run verify && npm run release:check");
+assert.equal(packageJson.main, "./dist/cjs/index.js");
+assert.equal(packageJson.module, "./dist/index.js");
+assert.equal(packageJson.exports?.["."]?.import, "./dist/index.js");
+assert.equal(packageJson.exports?.["."]?.require, "./dist/cjs/index.js");
+assert.equal(packageJson.scripts?.build, "npm run build:esm && npm run build:cjs");
+assert.equal(packageJson.scripts?.typecheck, "npm run typecheck:esm && npm run typecheck:cjs");
 assert.equal(typeof packageJson.version, "string");
 assert.ok(packageJson.version.length > 0);
 assert.ok(typeof packageJson.license === "string" && packageJson.license.length > 0, "package.json license must be selected before release");
 assert.ok(existsSync(join(root, "..", "LICENSE")), "LICENSE file is required for release");
 assert.ok(existsSync(join(root, "..", "package-lock.json")), "package-lock.json is required for reproducible release verification");
+assert.ok(existsSync(join(root, "..", "tsconfig.cjs.json")), "CommonJS build configuration is required for release");
 
 const ci = readFileSync(join(root, "..", ".github", "workflows", "ci.yml"), "utf8");
 const publish = readFileSync(join(root, "..", ".github", "workflows", "publish.yml"), "utf8");

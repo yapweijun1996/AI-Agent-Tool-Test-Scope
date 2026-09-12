@@ -20,7 +20,17 @@ npx --no-install agent-test-scope explain --root . --changed src/order/service.t
 
 The CLI writes one JSON result to stdout and human-readable copies of diagnostics to stderr. `complete` means planning completed within the evidence boundary; it never means tests passed. `partial` means useful evidence exists with a bounded limitation. `error` means the request or root boundary must be corrected.
 
-The library exposes `getCapabilities`, `discoverTests`, `planTestScope`, `explainRecommendation`, and `execute` from `agent-test-scope`.
+The library exposes `getCapabilities`, `discoverTests`, `planTestScope`, `explainRecommendation`, and `execute` from `agent-test-scope`. Both ESM and CommonJS consumers are supported:
+
+```js
+import { planTestScope } from "agent-test-scope";
+```
+
+```js
+const { planTestScope } = require("agent-test-scope");
+```
+
+The CLI remains available as `agent-test-scope`.
 
 ## Agent skill and release status
 
