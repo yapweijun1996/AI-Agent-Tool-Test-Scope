@@ -6,7 +6,7 @@
 | Current phase | Phase 1 — Release Hardening |
 | Current task | TS-065–TS-066 — lockfile and clean-install gates |
 | Repository state | V0.1 implementation plus MIT licensing, npm metadata, prepack/publish gates, locked CI, release configuration check, and tag-triggered Trusted Publishing workflow |
-| Last verified commit | Latest local commit — deterministic test scope planner and V0.1 verification gates |
+| Last verified commit | `8b8c409` — npm CLI bin metadata normalized after publish dry-run audit |
 | Blockers | Committed npm lockfile and dependency-backed clean-install verification require external authorization/environment |
 | Release readiness | NOT READY — technical workflow and MIT licensing staged; lockfile and clean-install gates pending |
 
@@ -79,7 +79,7 @@ The V0.1 runtime slice is implemented in `src/core/` with one shared CLI/library
 
 TS-001 scaffold evidence now exists: package metadata, TypeScript configuration, CLI/library entrypoint declarations, package hygiene files, and design-specified directories. JSON parsing, scaffold-path assertions, whitespace validation, deterministic enumeration, and `npm pack --dry-run --json` passed.
 
-Runtime evidence before release hardening: strict TypeScript compilation passed using the existing local TypeScript toolchain from the sibling Symbol Search workspace; 17 native Node tests passed; coverage passed at lines 92.44%, branches 80.35%, and functions 95.96%; schema, capability, extracted-tarball CLI/library smoke, benchmark, and documentation checks passed. The repository's declared `npm run verify` was attempted but stops at typecheck because this checkout has no installed `@types/node`; package installation is prohibited by the product boundary. Release hardening now adds `prepack`, `prepublishOnly`, npm metadata, locked CI, a fail-closed release check, and tag-triggered Trusted Publishing configuration. MIT license/file checks pass structurally; the release check now fails closed only on the missing lockfile, while clean-install execution remains pending.
+Runtime evidence before release hardening: strict TypeScript compilation passed using the existing local TypeScript toolchain from the sibling Symbol Search workspace; 17 native Node tests passed; coverage passed at lines 92.44%, branches 80.35%, and functions 95.96%; schema, capability, extracted-tarball CLI/library smoke, benchmark, and documentation checks passed. The repository's declared `npm run verify` was attempted but stops at typecheck because this checkout has no installed `@types/node`; package installation is prohibited by the product boundary. Release hardening now adds `prepack`, `prepublishOnly`, npm metadata, locked CI, a fail-closed release check, and tag-triggered Trusted Publishing configuration. MIT license/file checks pass structurally; the release check now fails closed only on the missing lockfile, while clean-install execution remains pending. The npm publish dry-run now passes without metadata auto-correction after normalizing the CLI `bin` target; `npm audit` remains blocked by the missing lockfile.
 
 ## Next Best Move
 
@@ -116,6 +116,7 @@ npm run smoke:pack
 npm run capability:check
 npm run benchmark:check
 npm run docs:check
+npm run release:check
 ```
 
 All applicable checks must pass from the actual repository/package artifact.

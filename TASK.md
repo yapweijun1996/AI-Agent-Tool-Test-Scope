@@ -160,7 +160,7 @@ Acceptance criteria: npm metadata and lifecycle gates are declared; `dist/` is b
 Validation: JSON and YAML parsing passed; package dry-run contained `dist`, `skills/agent-test-scope/SKILL.md`, and `LICENSE`; existing 17-test suite, direct typecheck, tarball smoke, benchmark, and documentation checks passed. The release check passes the MIT license/file checks and correctly fails closed on the currently missing lockfile.
 Evidence: npm Trusted Publishing workflow is `push`-tag only and has `contents: read` plus `id-token: write`; no long-lived npm token is stored in the repository.
 Known limitations: `package-lock.json` has not been added; CI and publish workflow execution require GitHub and package-install access.
-Commit: pending local commit after this release-hardening slice.
+Commit: `7b63c10`.
 
 ## TS-064 Project License
 
@@ -172,4 +172,4 @@ Acceptance criteria: `package.json` declares `MIT`, the standard MIT notice is p
 Validation: JSON parsing, `git diff --check`, and static release-configuration inspection passed; the release check now passes the license gates and stops at the still-missing `package-lock.json` gate.
 Evidence: `package.json` declares `license: MIT`, `LICENSE` is included in `files`, and README links to the license.
 Known limitations: Copyright holder is currently recorded as `yapweijun1996`; replace it if the legal copyright owner should be a different person or organization. The lockfile and dependency-backed CI execution remain pending.
-Commit: pending local commit after this release-hardening slice.
+Commit: `1c287c8` (follow-up npm metadata normalization: `8b8c409`).
