@@ -110,6 +110,7 @@ These may move after V0.1 if standalone quality is not yet proven.
 - [x] **TS-067** Rerun GitHub CI after the Node 20 coverage workaround
 - [x] **TS-068** Add dual ESM/CommonJS package entrypoints
 - [x] **TS-069** Run a controlled pilot with the published package and agent Skill
+- [x] **TS-070** Publish `0.1.1` through npm Trusted Publishing
 
 ## Task Completion Template
 
@@ -203,23 +204,35 @@ Commit: `923b051`.
 ## TS-068 Dual Package Compatibility
 
 ID: TS-068
-Status: PASS — version `0.1.1` is a locally verified dual ESM/CommonJS release candidate.
+Status: PASS — version `0.1.1` is published and registry-verified as a dual ESM/CommonJS package.
 Goal: Allow modern ESM consumers and CommonJS consumers to load the same public library API without changing the CLI contract.
 Files changed: `package.json`, `package-lock.json`, `tsconfig.cjs.json`, `scripts/build-cjs.mjs`, `scripts/smoke-pack.mjs`, `scripts/release-check.mjs`, `README.md`, `DESIGN.md`.
 Acceptance criteria: ESM `import` and CommonJS `require` resolve the public API; both outputs are packaged; the CLI remains executable; typecheck/build/release metadata checks cover both outputs.
-Validation: `npm run verify`, coverage, schema, capability, packaged tarball smoke, benchmark, documentation, release, audit, and production publish dry-run checks passed. GitHub Actions run `34691041706` also passed on Node 20.x and Node 22.x. The tarball smoke loaded ESM directly and resolved the package through `require('agent-test-scope')` from an extracted package.
+Validation: `npm run verify`, coverage, schema, capability, packaged tarball smoke, benchmark, documentation, release, audit, and production publish dry-run checks passed. GitHub Actions runs `34691041706` and `34691118451` passed on Node 20.x and Node 22.x. The tarball smoke loaded ESM directly and resolved the package through `require('agent-test-scope')` from an extracted package. The publish workflow later repeated the full release checks successfully.
 Evidence: `package.json` maps `import` to `dist/index.js`, `require` and `main` to `dist/cjs/index.js`, and the package includes the nested CommonJS package marker required by the root ESM package boundary.
-Known limitations: Version `0.1.1` is not yet published; npm Trusted Publisher configuration and registry publication remain pending external release actions.
+Known limitations: Future releases require a new version and matching tag; the package's P2 external evidence adapters remain intentionally deferred.
 Commit: `0629f9b`.
 
 ## TS-069 Controlled Published-Package Pilot
 
 ID: TS-069
-Status: PASS — published `0.1.0` passed a host-like isolated pilot.
-Goal: Exercise the already published npm artifact as an AI-agent tool with explicit Skill loading and a read-only target repository.
+Status: PASS — published `0.1.0` and `0.1.1` passed host-like isolated pilots.
+Goal: Exercise published npm artifacts as an AI-agent tool with explicit Skill loading and a read-only target repository.
 Files changed: `scripts/pilot-published.mjs`.
 Acceptance criteria: The published artifact loads its Skill, executes `capabilities`, `discover`, and `plan` against an isolated fixture, returns bounded results, keeps commands unexecuted, and does not mutate the fixture.
-Validation: `npm pack agent-test-scope@0.1.0` was extracted into a temporary directory and `node scripts/pilot-published.mjs` passed. The fixture snapshot before and after the pilot was identical.
-Evidence: The pilot reported package version `0.1.0`, `skillLoaded: true`, `targetRepositoryMutated: false`, and successful results for all three operations.
+Validation: `npm pack agent-test-scope@0.1.0` and `npm pack agent-test-scope@0.1.1` were extracted into temporary directories and `node scripts/pilot-published.mjs` passed for both. The fixture snapshot before and after each pilot was identical.
+Evidence: The pilot reported package version `0.1.1`, `skillLoaded: true`, `targetRepositoryMutated: false`, and successful results for all three operations; the published package was also resolved through both ESM `import` and CommonJS `require`.
 Known limitations: This is a controlled host-like pilot, not an integration with a specific LLM or agent runtime because none was supplied. It validates the package/Skill/tool boundary, not model quality or an external host's sandbox policy.
 Commit: `0629f9b`.
+
+## TS-070 npm Trusted Publishing Release
+
+ID: TS-070
+Status: PASS — `0.1.1` was published from the matching `v0.1.1` tag through GitHub OIDC Trusted Publishing.
+Goal: Release the verified dual-module package through the protected tag workflow and confirm the actual registry artifact.
+Files changed: npm package registry state, Git tag `v0.1.1`, `TASK.md`, `PROGRESS.md`, `README.md`.
+Acceptance criteria: npm Trusted Publisher matches the repository, workflow, and environment; the tag matches `package.json`; the workflow's verification and publish steps pass; npm reports `0.1.1` as `latest`; the registry exposes provenance and the expected package entrypoints.
+Validation: GitHub Actions run `34695091122` completed successfully, including Verify, Coverage, package checks, and `npm publish --provenance --access public`. `npm view` reports `latest: 0.1.1`, 88 packaged files, both ESM/CJS outputs, a tarball integrity, and a SLSA provenance attestation. The downloaded registry tarball passed ESM import, CommonJS require, CLI, and agent pilot checks.
+Evidence: [npm package version 0.1.1](https://www.npmjs.com/package/agent-test-scope/v/0.1.1), [publish workflow run](https://github.com/yapweijun1996/AI-Agent-Tool-Test-Scope/actions/runs/34695091122), and tag `v0.1.1`.
+Known limitations: This release proves the package and Skill boundary, not model quality or every external agent host's sandbox and execution policy.
+Commit: `455c3cc` source commit; tag `v0.1.1`.

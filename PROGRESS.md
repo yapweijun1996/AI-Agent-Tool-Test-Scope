@@ -2,13 +2,13 @@
 
 | Field | Current value |
 |---|---|
-| Overall | 96% |
+| Overall | 100% of V0.1 release gates |
 | Current phase | Phase 1 — Release Hardening |
-| Current task | TS-068–TS-069 — dual package compatibility and controlled published-package pilot |
-| Repository state | V0.1 implementation plus MIT licensing, committed npm lockfile, dependency-backed clean install, npm metadata, dual ESM/CommonJS outputs, prepack/publish gates, green Node 20/22 CI baseline, release configuration check, tag-triggered Trusted Publishing workflow, and a verified published-package pilot |
-| Last verified code commit | `0629f9b` — dual ESM/CommonJS package entrypoints and controlled published-package pilot |
-| Blockers | The `0.1.1` candidate still needs explicit registry publication. npm Trusted Publisher/environment configuration and copyright-holder confirmation remain external/legal gates |
-| Release readiness | `0.1.0` is published and pilot-verified; `0.1.1` is CI-verified and release-ready pending Trusted Publishing and registry publication |
+| Current task | TS-070 — post-release verification for published `0.1.1` |
+| Repository state | V0.1 implementation plus MIT licensing, committed npm lockfile, dependency-backed clean install, npm metadata, dual ESM/CommonJS outputs, prepack/publish gates, green Node 20/22 CI, configured npm Trusted Publishing, matching `v0.1.1` tag, published npm artifact with provenance, and registry-side agent pilot verification |
+| Last verified release source commit | `455c3cc` — release source for `v0.1.1` |
+| Blockers | None for the V0.1 release. P2 external evidence adapters, specific agent-host integrations, and routine post-release monitoring remain future work |
+| Release readiness | `0.1.1` is published, latest, provenance-attested, dual-entrypoint verified, and pilot-verified |
 
 ## Capability Matrix
 
@@ -34,7 +34,7 @@
 | Package smoke | PASS — extracted tarball ESM/CJS public-entrypoint smoke and clean install passed |
 | Coverage gate | PASS |
 | Benchmark | PASS |
-| Release | CANDIDATE — local gates and pilot pass; candidate GitHub/registry execution pending |
+| Release | PASS — `0.1.1` published through Trusted Publishing with provenance |
 
 ## Current Product Truth
 
@@ -79,11 +79,11 @@ The V0.1 runtime slice is implemented in `src/core/` with one shared CLI/library
 
 TS-001 scaffold evidence now exists: package metadata, TypeScript configuration, CLI/library entrypoint declarations, package hygiene files, and design-specified directories. JSON parsing, scaffold-path assertions, whitespace validation, deterministic enumeration, and `npm pack --dry-run --json` passed.
 
-Runtime evidence: the dependency-backed `npm ci`, declared `npm run verify`, 17 native tests, coverage (92.44% lines, 80.35% branches, 95.96% functions), schema, capability, extracted-tarball ESM/CJS smoke, benchmark, documentation, release, and both audit modes pass locally for the `0.1.1` candidate. GitHub Actions run `34691041706` is green on Node 20.x and Node 22.x after keeping built-in coverage enforced on Node 22.x for the known Node 20 source-map coverage regression. The `0.1.0` registry artifact was independently extracted and exercised by `scripts/pilot-published.mjs`: the Skill loaded, `capabilities/discover/plan` returned bounded results, commands stayed `executed: false`, and the fixture was byte-for-byte unchanged. Release hardening includes `prepack`, `prepublishOnly`, npm metadata, locked CI, a fail-closed release check, dual ESM/CommonJS entrypoints, and tag-triggered Trusted Publishing configuration. The `0.1.1` publish dry-run is clean and includes the public library, CLI, schemas, Skill, MIT license, and both module outputs.
+Runtime evidence: the dependency-backed `npm ci`, declared `npm run verify`, 17 native tests, coverage (92.44% lines, 80.35% branches, 95.96% functions), schema, capability, extracted-tarball ESM/CJS smoke, benchmark, documentation, release, and both audit modes pass locally. GitHub Actions run `34695091122` completed the release workflow successfully, including `npm publish --provenance --access public`. npm now reports `agent-test-scope@0.1.1` as `latest`, with 88 files, dual ESM/CommonJS outputs, and a SLSA provenance attestation. The downloaded registry artifact passed ESM package import, CommonJS package require, CLI execution, and `scripts/pilot-published.mjs`; the Skill loaded, `capabilities/discover/plan` returned bounded results, commands stayed `executed: false`, and the fixture was byte-for-byte unchanged. Release hardening includes `prepack`, `prepublishOnly`, npm metadata, locked CI, a fail-closed release check, dual ESM/CommonJS entrypoints, and tag-triggered Trusted Publishing configuration.
 
 ## Next Best Move
 
-The next handoff is to configure/verify npm Trusted Publishing and publish only from the matching `v0.1.1` tag. The controlled pilot is sufficient for the package boundary; it is not evidence of model quality or a specific agent host's sandbox behavior.
+The next move is normal post-release monitoring and adoption feedback. Future releases should use a new semver version, matching tag, green CI, and the existing Trusted Publishing workflow. The controlled pilot is sufficient for the package boundary; it is not evidence of model quality or a specific agent host's sandbox behavior.
 
 Avoid implementing framework logic before the request/result envelope and safety boundaries exist.
 
@@ -122,7 +122,7 @@ npm audit
 
 All applicable checks must pass from the actual repository/package artifact.
 
-For the implemented slice and `0.1.1` candidate, direct ESM/CJS typecheck, 17 runtime tests, schema check, capability check, extracted tarball CLI/library smoke, coverage thresholds, benchmark bound, docs check, deterministic repeated output, root/symlink/secret/resource fixtures, CLI/library parity, committed-lockfile `npm ci`, dependency-complete `npm run verify`, `npm audit`, and release configuration checks passed. GitHub Actions run `34691041706` is green for both Node 20.x and Node 22.x, with coverage enforced on Node 22.x. The published `0.1.0` host-like pilot passed; a real `0.1.1` Trusted Publishing release remains unexecuted.
+For the implemented slice and published `0.1.1`, direct ESM/CJS typecheck, 17 runtime tests, schema check, capability check, extracted tarball CLI/library smoke, coverage thresholds, benchmark bound, docs check, deterministic repeated output, root/symlink/secret/resource fixtures, CLI/library parity, committed-lockfile `npm ci`, dependency-complete `npm run verify`, `npm audit`, release configuration checks, and the tag-triggered publish workflow passed. GitHub Actions run `34695091122` published `0.1.1` via Trusted Publishing with provenance. The registry-side `0.1.1` ESM/CJS/CLI smoke and host-like pilot passed.
 
 ## Progress Update Rule
 
