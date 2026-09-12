@@ -107,6 +107,7 @@ These may move after V0.1 if standalone quality is not yet proven.
 - [x] **TS-064** Choose and add project license
 - [x] **TS-065** Run clean-install verification in authorized CI/GitHub environment
 - [x] **TS-066** Commit and verify npm lockfile
+- [ ] **TS-067** Rerun GitHub CI after the Node 20 coverage workaround
 
 ## Task Completion Template
 
@@ -177,11 +178,22 @@ Commit: `1c287c8` (follow-up npm metadata normalization: `8b8c409`).
 ## TS-065–TS-066 Clean Install and Lockfile
 
 ID: TS-065–TS-066
-Status: PASS — reproducible dependency installation and local release gates verified.
+Status: PASS — reproducible dependency installation and local release gates verified; TS-067 tracks the separate remote CI rerun.
 Goal: Commit a reproducible npm lockfile and prove the package from a clean dependency installation.
 Files changed: `package-lock.json`, `package.json`, `src/core/discovery.ts`, `scripts/smoke-pack.mjs`, `TASK.md`, `PROGRESS.md`.
 Acceptance criteria: `npm ci` succeeds from the committed lockfile; `npm run verify`, coverage, schema, capability, packaged-artifact smoke, benchmark, docs, release, and audit gates pass; no runtime dependency vulnerabilities remain.
-Validation: `npm ci --ignore-scripts`, `npm run verify`, `npm run coverage`, `npm run schema:check`, `npm run capability:check`, `npm run smoke:pack`, `npm run benchmark:check`, `npm run docs:check`, `npm run release:check`, `npm audit`, and `npm audit --omit=dev` all passed.
-Evidence: The lockfile resolves only `@types/node`, `typescript`, and `undici-types` for development; runtime dependency tree is empty and both audit modes report zero vulnerabilities. The type fix makes directory discovery compatible with the locked Node declarations without changing runtime behavior.
-Known limitations: GitHub CI, npm Trusted Publisher/environment configuration, and a real tagged registry publish remain external gates.
+Validation: Local `npm ci --ignore-scripts`, `npm run verify`, `npm run coverage`, `npm run schema:check`, `npm run capability:check`, `npm run smoke:pack`, `npm run benchmark:check`, `npm run docs:check`, `npm run release:check`, `npm audit`, and `npm audit --omit=dev` all passed. Remote CI run `34664358843` passed the full Node 22.x job and Node 20.x Verify, but Node 20.x Coverage failed in Node's built-in source-map coverage reporter after all 17 tests passed.
+Evidence: The lockfile resolves only `@types/node`, `typescript`, and `undici-types` for development; runtime dependency tree is empty and both audit modes report zero vulnerabilities. The type fix makes directory discovery compatible with the locked Node declarations without changing runtime behavior. The CI workflow now scopes coverage to Node 22.x while retaining Node 20.x verification because Node.js tracks this coverage regression in the Node 20 line.
+Known limitations: The workflow workaround is not yet pushed or rerun; npm Trusted Publisher/environment configuration and a real tagged registry publish remain external gates.
 Commit: pending local commit after this verification slice.
+
+## TS-067 GitHub CI Rerun
+
+ID: TS-067
+Status: PENDING — workflow workaround prepared locally; remote rerun requires a new push.
+Goal: Confirm both supported Node 20.x and Node 22.x CI jobs are green after scoping built-in coverage to Node 22.x.
+Files changed: `.github/workflows/ci.yml`, `TASK.md`, `PROGRESS.md`.
+Acceptance criteria: Node 20.x Verify and contract checks pass, Node 22.x full verification and coverage pass, and the workflow completes successfully on the pushed commit.
+Validation: The first remote run `34664358843` showed Node 22.x fully green and Node 20.x Verify green; Node 20.x Coverage failed with the known Node source-map coverage regression. The local workflow change adds `if: matrix.node-version == '22.x'` to Coverage.
+Known limitations: The workflow change has not yet been pushed or remotely verified.
+Commit: pending local commit after this CI compatibility slice.

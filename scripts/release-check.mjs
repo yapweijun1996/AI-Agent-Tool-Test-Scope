@@ -29,4 +29,4 @@ assert.match(publish, /tags:/);
 assert.match(publish, /v\*/);
 assert.ok(existsSync(join(root, "..", "README.md")));
 
-console.log("Release configuration baseline passed; clean-install execution remains an external gate");
+console.log("Release configuration baseline passed; CI execution remains an external gate");

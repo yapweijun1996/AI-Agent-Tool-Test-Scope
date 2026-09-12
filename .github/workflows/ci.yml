@@ -35,6 +35,8 @@ jobs:
       - name: Verify
         run: npm run verify
       - name: Coverage
+        # Node 20.x has a known built-in test coverage regression with source maps; enforce coverage on Node 22.x while keeping verification on Node 20.x.
+        if: matrix.node-version == '22.x'
         run: npm run coverage
       - name: Contract and release checks
         run: |
