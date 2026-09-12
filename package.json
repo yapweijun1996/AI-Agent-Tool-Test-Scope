@@ -23,7 +23,7 @@
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "bin": {
-    "agent-test-scope": "./dist/cli.js"
+    "agent-test-scope": "dist/cli.js"
   },
   "exports": {
     ".": {
