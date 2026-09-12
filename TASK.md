@@ -207,9 +207,9 @@ Status: PASS — version `0.1.1` is a locally verified dual ESM/CommonJS release
 Goal: Allow modern ESM consumers and CommonJS consumers to load the same public library API without changing the CLI contract.
 Files changed: `package.json`, `package-lock.json`, `tsconfig.cjs.json`, `scripts/build-cjs.mjs`, `scripts/smoke-pack.mjs`, `scripts/release-check.mjs`, `README.md`, `DESIGN.md`.
 Acceptance criteria: ESM `import` and CommonJS `require` resolve the public API; both outputs are packaged; the CLI remains executable; typecheck/build/release metadata checks cover both outputs.
-Validation: `npm run verify`, coverage, schema, capability, packaged tarball smoke, benchmark, documentation, release, audit, and production publish dry-run checks passed. The tarball smoke loaded ESM directly and resolved the package through `require('agent-test-scope')` from an extracted package.
+Validation: `npm run verify`, coverage, schema, capability, packaged tarball smoke, benchmark, documentation, release, audit, and production publish dry-run checks passed. GitHub Actions run `34691041706` also passed on Node 20.x and Node 22.x. The tarball smoke loaded ESM directly and resolved the package through `require('agent-test-scope')` from an extracted package.
 Evidence: `package.json` maps `import` to `dist/index.js`, `require` and `main` to `dist/cjs/index.js`, and the package includes the nested CommonJS package marker required by the root ESM package boundary.
-Known limitations: Version `0.1.1` is not yet published; GitHub CI for this candidate and registry publication remain pending external release actions.
+Known limitations: Version `0.1.1` is not yet published; npm Trusted Publisher configuration and registry publication remain pending external release actions.
 Commit: `0629f9b`.
 
 ## TS-069 Controlled Published-Package Pilot
