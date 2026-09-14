@@ -10,6 +10,17 @@ V0.1 supports JavaScript, TypeScript, JSX, and TSX repositories with Vitest, Jes
 
 ## Usage
 
+For Codex CLI, install globally so the command is available from any project:
+
+```bash
+npm install --global agent-test-scope@latest
+agent-test-scope capabilities --root .
+```
+
+The global installation exposes `agent-test-scope`; it does not execute tests
+or automatically register the optional Codex Skill. For a checkout, use
+`npm ci`, `npm run build`, and the same command through `node dist/cli.js`.
+
 ```bash
 npm install
 npx --no-install agent-test-scope capabilities --root .
